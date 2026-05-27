@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Grill Me — FIFA Jerseys"
+version = "1.0.0"
+id = "artifacts/grill-me"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22906
+
+[services.development]
+run = "pnpm --filter @workspace/grill-me run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/grill-me", "run", "build" ]
+publicDir = "artifacts/grill-me/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22906"
+BASE_PATH = "/"
