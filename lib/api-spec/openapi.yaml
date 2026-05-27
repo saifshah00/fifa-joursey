@@ -1,0 +1,519 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: Saifit — FIFA Jersey Store API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: jerseys
+    description: Jersey catalog
+  - name: orders
+    description: Order management
+  - name: otp
+    description: OTP verification
+  - name: admin
+    description: Admin order management and analytics
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /jerseys:
+    get:
+      operationId: listJerseys
+      tags: [jerseys]
+      summary: List all jerseys
+      parameters:
+        - in: query
+          name: team
+          schema:
+            type: string
+          description: Filter by team name
+        - in: query
+          name: type
+          schema:
+            type: string
+          description: Filter by type (home/away/third)
+      responses:
+        "200":
+          description: List of jerseys
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Jersey"
+
+  /jerseys/featured:
+    get:
+      operationId: getFeaturedJerseys
+      tags: [jerseys]
+      summary: Get featured jerseys
+      responses:
+        "200":
+          description: Featured jerseys
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Jersey"
+
+  /jerseys/{id}:
+    get:
+      operationId: getJersey
+      tags: [jerseys]
+      summary: Get a jersey by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Jersey details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Jersey"
+        "404":
+          description: Not found
+
+  /payments/create-intent:
+    post:
+      operationId: createPaymentIntent
+      tags: [orders]
+      summary: Create a Stripe Payment Intent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentIntentInput"
+      responses:
+        "200":
+          description: Payment intent created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentIntentResult"
+        "400":
+          description: Bad request
+
+  /orders:
+    post:
+      operationId: createOrder
+      tags: [orders]
+      summary: Create an order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderInput"
+      responses:
+        "201":
+          description: Order created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "400":
+          description: Bad request
+
+  /otp/request:
+    post:
+      operationId: requestOtp
+      tags: [otp]
+      summary: Request an OTP for order confirmation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OtpRequest"
+      responses:
+        "200":
+          description: OTP sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OtpRequestResult"
+        "400":
+          description: Bad request
+
+  /otp/verify:
+    post:
+      operationId: verifyOtp
+      tags: [otp]
+      summary: Verify OTP and return a token for order placement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OtpVerify"
+      responses:
+        "200":
+          description: OTP verified, returns a token to use when placing the order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OtpVerifyResult"
+        "400":
+          description: Invalid or expired OTP
+
+  /admin/orders:
+    get:
+      operationId: listAdminOrders
+      tags: [admin]
+      summary: List all orders (admin)
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+          description: Filter by status (confirmed, shipped, delivered, cancelled)
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Search by customer name or email
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 50
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            default: 0
+      responses:
+        "200":
+          description: Paginated list of orders
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminOrderList"
+
+  /admin/orders/{id}:
+    get:
+      operationId: getAdminOrder
+      tags: [admin]
+      summary: Get a single order with full details (admin)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Full order detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminOrder"
+        "404":
+          description: Not found
+    patch:
+      operationId: updateOrderStatus
+      tags: [admin]
+      summary: Update order status (admin)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateOrderStatusInput"
+      responses:
+        "200":
+          description: Updated order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminOrder"
+        "404":
+          description: Not found
+
+  /admin/stats:
+    get:
+      operationId: getAdminStats
+      tags: [admin]
+      summary: Get order statistics and analytics (admin)
+      responses:
+        "200":
+          description: Aggregated statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStats"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    Jersey:
+      type: object
+      required: [id, name, team, country, type, price, imageUrl, inStock, sizes]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        team:
+          type: string
+        country:
+          type: string
+        type:
+          type: string
+          description: home, away, or third
+        price:
+          type: number
+        originalPrice:
+          type: ["number", "null"]
+        imageUrl:
+          type: string
+        inStock:
+          type: boolean
+        sizes:
+          type: array
+          items:
+            type: string
+        isFeatured:
+          type: boolean
+        rating:
+          type: number
+        reviewCount:
+          type: integer
+
+    CartItem:
+      type: object
+      required: [jerseyId, quantity, size]
+      properties:
+        jerseyId:
+          type: integer
+        quantity:
+          type: integer
+        size:
+          type: string
+
+    OrderInput:
+      type: object
+      required: [items, customerName, customerEmail, shippingAddress, otpToken]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartItem"
+        customerName:
+          type: string
+        customerEmail:
+          type: string
+        shippingAddress:
+          type: string
+        city:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        otpToken:
+          type: string
+          description: Verified OTP token received after OTP verification
+
+    Order:
+      type: object
+      required: [id, status, customerName, customerEmail, totalAmount, createdAt]
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          description: pending, confirmed, shipped, delivered
+        customerName:
+          type: string
+        customerEmail:
+          type: string
+        shippingAddress:
+          type: string
+        totalAmount:
+          type: number
+        createdAt:
+          type: string
+
+    AdminOrder:
+      type: object
+      required: [id, status, customerName, customerEmail, shippingAddress, totalAmount, createdAt, items]
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        customerName:
+          type: string
+        customerEmail:
+          type: string
+        shippingAddress:
+          type: string
+        city:
+          type: ["string", "null"]
+        postalCode:
+          type: ["string", "null"]
+        country:
+          type: ["string", "null"]
+        totalAmount:
+          type: number
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/CartItem"
+        createdAt:
+          type: string
+
+    AdminOrderList:
+      type: object
+      required: [orders, total]
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminOrder"
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+
+    UpdateOrderStatusInput:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          enum: [confirmed, shipped, delivered, cancelled]
+
+    AdminStats:
+      type: object
+      required: [totalOrders, totalRevenue, ordersByStatus, revenueByDay, topTeams]
+      properties:
+        totalOrders:
+          type: integer
+        totalRevenue:
+          type: number
+        avgOrderValue:
+          type: number
+        ordersByStatus:
+          type: array
+          items:
+            type: object
+            properties:
+              status:
+                type: string
+              count:
+                type: integer
+        revenueByDay:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+              revenue:
+                type: number
+              orders:
+                type: integer
+        topTeams:
+          type: array
+          items:
+            type: object
+            properties:
+              team:
+                type: string
+              units:
+                type: integer
+              revenue:
+                type: number
+
+    OtpRequest:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+
+    OtpRequestResult:
+      type: object
+      required: [message, devOtp]
+      properties:
+        message:
+          type: string
+        devOtp:
+          type: string
+          description: OTP shown in demo mode (remove in production)
+
+    OtpVerify:
+      type: object
+      required: [email, otp]
+      properties:
+        email:
+          type: string
+        otp:
+          type: string
+
+    OtpVerifyResult:
+      type: object
+      required: [message, token]
+      properties:
+        message:
+          type: string
+        token:
+          type: string
+
+    PaymentIntentInput:
+      type: object
+      required: [amountCents, currency]
+      properties:
+        amountCents:
+          type: integer
+          description: Amount in smallest currency unit (e.g. cents for USD)
+        currency:
+          type: string
+          description: ISO 4217 currency code (e.g. usd, gbp)
+
+    PaymentIntentResult:
+      type: object
+      required: [clientSecret, paymentIntentId]
+      properties:
+        clientSecret:
+          type: string
+        paymentIntentId:
+          type: string

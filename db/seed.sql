@@ -1,0 +1,17 @@
+INSERT OR IGNORE INTO jerseys (sku, name, team, country, type, price, originalPrice, imageUrl, inStock, sizes, rating, reviewCount, isFeatured) VALUES
+  ('ARG-HOME-2026',  'Argentina Home Kit 2026',   'Argentina',  'Argentina',  'home',  89.99, 109.99, '/jerseys/argentina-home.png',  1, '["S","M","L","XL","XXL"]', 4.9, 312, 1),
+  ('ARG-AWAY-2026',  'Argentina Away Kit 2026',   'Argentina',  'Argentina',  'away',  84.99,   NULL, '/jerseys/argentina-away.png',  1, '["S","M","L","XL","XXL"]', 4.7, 198, 0),
+  ('BRA-HOME-2026',  'Brazil Home Kit 2026',      'Brazil',     'Brazil',     'home',  89.99, 109.99, '/jerseys/brazil-home.png',     1, '["S","M","L","XL","XXL"]', 4.9, 427, 1),
+  ('BRA-AWAY-2026',  'Brazil Away Kit 2026',      'Brazil',     'Brazil',     'away',  84.99,   NULL, '/jerseys/brazil-away.png',     1, '["S","M","L","XL","XXL"]', 4.6, 203, 0),
+  ('ENG-HOME-2026',  'England Home Kit 2026',     'England',    'England',    'home',  89.99,   NULL, '/jerseys/england-home.png',    1, '["S","M","L","XL","XXL"]', 4.7, 265, 0),
+  ('ENG-THIRD-2026', 'England Third Kit 2026',    'England',    'England',    'third', 79.99,  94.99, '/jerseys/england-third.png',   1, '["S","M","L","XL","XXL"]', 4.5, 142, 0),
+  ('FRA-HOME-2026',  'France Home Kit 2026',      'France',     'France',     'home',  89.99, 109.99, '/jerseys/france-home.png',     1, '["S","M","L","XL","XXL"]', 4.8, 389, 1),
+  ('FRA-AWAY-2026',  'France Away Kit 2026',      'France',     'France',     'away',  84.99,   NULL, '/jerseys/france-away.png',     1, '["S","M","L","XL","XXL"]', 4.6, 211, 0),
+  ('GER-HOME-2026',  'Germany Home Kit 2026',     'Germany',    'Germany',    'home',  89.99,   NULL, '/jerseys/germany-home.png',    1, '["S","M","L","XL","XXL"]', 4.7, 234, 0),
+  ('GER-AWAY-2026',  'Germany Away Kit 2026',     'Germany',    'Germany',    'away',  84.99,  99.99, '/jerseys/germany-away.png',    1, '["S","M","L","XL","XXL"]', 4.5, 178, 0),
+  ('ITA-HOME-2026',  'Italy Home Kit 2026',       'Italy',      'Italy',      'home',  89.99,   NULL, '/jerseys/italy-home.png',      1, '["S","M","L","XL","XXL"]', 4.8, 301, 0),
+  ('NED-HOME-2026',  'Netherlands Home Kit 2026', 'Netherlands','Netherlands','home',  84.99,   NULL, '/jerseys/netherlands-home.png',1, '["S","M","L","XL","XXL"]', 4.6, 156, 0),
+  ('POR-HOME-2026',  'Portugal Home Kit 2026',    'Portugal',   'Portugal',   'home',  89.99, 104.99, '/jerseys/portugal-home.png',   1, '["S","M","L","XL","XXL"]', 4.8, 278, 1),
+  ('POR-AWAY-2026',  'Portugal Away Kit 2026',    'Portugal',   'Portugal',   'away',  84.99,   NULL, '/jerseys/portugal-away.png',   1, '["S","M","L","XL","XXL"]', 4.5, 167, 0),
+  ('ESP-HOME-2026',  'Spain Home Kit 2026',       'Spain',      'Spain',      'home',  89.99,   NULL, '/jerseys/spain-home.png',      1, '["S","M","L","XL","XXL"]', 4.9, 356, 0),
+  ('ESP-AWAY-2026',  'Spain Away Kit 2026',       'Spain',      'Spain',      'away',  84.99,  99.99, '/jerseys/spain-away.png',      1, '["S","M","L","XL","XXL"]', 4.6, 189, 0);

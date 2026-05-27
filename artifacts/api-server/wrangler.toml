@@ -1,0 +1,14 @@
+name = "fifa-jersey-api"
+main = "src/index.ts"
+compatibility_date = "2026-05-26"
+
+d1_databases = [
+  { binding = "DB", database_name = "fifa-jersey-shop", database_id = "039796f6-0b8f-4325-933c-0d12c4110da4" }
+]
+
+[vars]
+BASE_PATH = "/api"
+
+[dev]
+port = 8080
+local_protocol = "http"
