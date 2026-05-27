@@ -1,0 +1,56 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "HoO1Z0q1zxqP8acmib8UO"
+uri = "file://artifacts/grill-me/src/assets/jersey-argentina.png"
+type = "image"
+title = "Argentina football jersey"
+
+[[generated]]
+id = "d7wT7rvt9s6Hs3NW12_ME"
+uri = "file://artifacts/grill-me/src/assets/jersey-brazil.png"
+type = "image"
+title = "Brazil football jersey"
+
+[[generated]]
+id = "IAPClfZkuOjGcHEFLlFpQ"
+uri = "file://artifacts/grill-me/src/assets/jersey-france.png"
+type = "image"
+title = "France football jersey"
+
+[[generated]]
+id = "1IHAuHCsTnpSKcBdToCtQ"
+uri = "file://artifacts/grill-me/src/assets/jersey-germany.png"
+type = "image"
+title = "Germany football jersey"
+
+[[generated]]
+id = "NBg4raIMIDpHkDLHQT5nc"
+uri = "file://artifacts/grill-me/src/assets/jersey-spain.png"
+type = "image"
+title = "Spain football jersey"
+
+[[generated]]
+id = "sZlx-PzqZEnCd1THZ8nnl"
+uri = "file://artifacts/grill-me/src/assets/jersey-italy.png"
+type = "image"
+title = "Italy football jersey"
+
+[[generated]]
+id = "_H0iGe1iwdlb3XL4mAZBe"
+uri = "file://artifacts/grill-me/src/assets/jersey-england.png"
+type = "image"
+title = "England football jersey"
+
+[[generated]]
+id = "3mhLhWNIsPWMN1bt7nzIw"
+uri = "file://artifacts/grill-me/src/assets/jersey-japan.png"
+type = "image"
+title = "Japan football jersey"
+
+[[generated]]
+id = "g9EF9I2EGp9otVNr3FCCl"
+uri = "file://artifacts/grill-me/src/assets/hero-stadium.png"
+type = "image"
+title = "Stadium hero background"
