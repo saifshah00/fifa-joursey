@@ -30,7 +30,7 @@ paymentsRouter.post('/payments/create-intent', async (c) => {
     body: formData,
   });
 
-  const data = await response.json();
+  const data = await response.json() as any;
   if (!response.ok) {
     return c.json({ error: data.error?.message || 'Stripe payment creation failed' }, 500);
   }

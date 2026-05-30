@@ -29,7 +29,7 @@ function mapOrderRow(row: any) {
 }
 
 adminRouter.get('/admin/orders', async (c) => {
-  const rawQuery = Object.fromEntries(c.req.query());
+  const rawQuery = c.req.query();
   const parsed = ListAdminOrdersQueryParams.safeParse(rawQuery);
   if (!parsed.success) {
     return c.json({ error: parsed.error.message }, 400);

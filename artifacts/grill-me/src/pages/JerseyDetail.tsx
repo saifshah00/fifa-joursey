@@ -11,9 +11,7 @@ export default function JerseyDetail() {
   const [, params] = useRoute('/jersey/:id');
   const id = params?.id ? parseInt(params.id) : 0;
   
-  const { data: jersey, isLoading } = useGetJersey(id, {
-    query: { enabled: !!id }
-  });
+  const { data: jersey, isLoading } = useGetJersey(id);
   
   const { addToCart } = useCart();
   const { toast } = useToast();

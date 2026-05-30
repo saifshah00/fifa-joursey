@@ -1,0 +1,6 @@
+name = "grill-me"
+pages_build_output_dir = "dist/public"
+compatibility_date = "2026-05-26"
+
+[vars]
+VITE_API_BASE = "/api"

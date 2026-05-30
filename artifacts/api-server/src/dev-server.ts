@@ -85,7 +85,7 @@ const execCtx = {
   passThroughOnException: () => {},
 } as ExecutionContext;
 
-const { default: app } = await import('./index.ts');
+const { default: app } = await import('./index.js');
 
 const port = Number(process.env.PORT ?? 8080);
 

@@ -1,9 +1,9 @@
-import { pgTable, text, uuid, numeric, timestamp, jsonb } from "drizzle-orm/pg-core";
+import { sqliteTable, text, real } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
-export const ordersTable = pgTable("orders", {
-  id: uuid("id").primaryKey().defaultRandom(),
+export const ordersTable = sqliteTable("orders", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   status: text("status").notNull().default("confirmed"),
   customerName: text("customer_name").notNull(),
   customerEmail: text("customer_email").notNull(),
@@ -11,9 +11,9 @@ export const ordersTable = pgTable("orders", {
   city: text("city"),
   postalCode: text("postal_code"),
   country: text("country"),
-  items: jsonb("items").notNull(),
-  totalAmount: numeric("total_amount", { precision: 10, scale: 2 }).notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  items: text("items", { mode: "json" }).notNull(),
+  totalAmount: real("total_amount").notNull(),
+  createdAt: text("created_at").$defaultFn(() => new Date().toISOString()),
 });
 
 export const insertOrderSchema = createInsertSchema(ordersTable).omit({ id: true, createdAt: true });
